@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profil der Verluste – v4 (d3.js, Wireframe)</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="stage" aria-label="Spinnendiagramm-Übersicht">
+
+  <!-- Minikarte (09e Fokus-Hof) -->
+  <button id="minimap" class="minimap" aria-label="Grosse Karte öffnen">
+    <svg id="minimap-svg" viewBox="0 0 172 116" width="172" height="116" aria-hidden="true"></svg>
+    <span class="minimap-cap"><span id="minimap-info" class="minimap-info"></span><span class="minimap-hover">Karte öffnen</span></span>
+  </button>
+
+  <!-- Kopf: Vergleich steuern (K5) -->
+  <div id="kopf" class="kopf" aria-label="Gletscher im Vergleich"></div>
+
+  <!-- Info-Button (B2) -->
+  <button id="info-btn" class="info-btn" aria-controls="page">
+    <span class="info-label">Was zeige ich hier?</span>
+    <span class="info-q">?</span>
+  </button>
+
+  <!-- Spinnendiagramm (bleibt in der Mitte, egal wie breit das Fenster ist) -->
+  <div id="center" class="center">
+  <svg id="radar" class="radar" viewBox="0 0 1440 1024" width="1440" height="1024" aria-hidden="true"></svg>
+  <div id="axes"></div>
+  <p class="hint">Aussen = mehr Verlust, gemessen an allen neun Messgletschern. Hohle Punkte sind geschätzt.</p>
+  </div>
+
+  <!-- Gletscher-Detail (D5) -->
+  <div id="detail" class="detail" hidden></div>
+
+  <!-- Zeitregler (Z1) -->
+  <div id="zeit" class="zeit">
+    <div class="zeit-head">
+      <span id="zeit-kicker" class="zeit-kicker"></span>
+      <span id="zeit-wert" class="zeit-wert"></span>
+    </div>
+    <svg id="zeit-svg" viewBox="0 0 441 96" width="441" height="96" aria-label="Zeitraum wählen"></svg>
+  </div>
+
+  <!-- Unterseiten: Karte, Info, Metriken (pages.js) -->
+  <section id="page" class="page" hidden aria-live="polite"></section>
+
+  <!-- Pop-up: Gletscher vergleichen -->
+  <div id="popup-overlay" class="overlay" hidden>
+    <div class="popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+      <div class="pp-head">
+        <div>
+          <h2 id="popup-title" class="serif">Gletscher vergleichen</h2>
+          <p class="muted">Bis zu fünf Messgletscher.</p>
+        </div>
+        <button class="x" data-close="popup" aria-label="Schliessen"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      </div>
+      <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="popup-search" type="search" placeholder="Suchen" autocomplete="off"></label>
+      <div class="pp-count"><span id="popup-count"></span><span id="popup-bars" class="bars" hidden></span><button id="popup-reset" class="link">Alle abwählen</button></div>
+      <div class="pp-cols" aria-hidden="true"><span></span><span>ID</span><span>Gletscher</span><span>Etikett</span><span>Kanton</span><span>Fläche</span></div>
+      <ul id="popup-list" class="pp-list"></ul>
+      <p id="popup-full" class="pp-full" hidden>Fünf gewählt. Wähle einen ab, um einen anderen hinzuzufügen.</p>
+      <div class="pp-actions"><button class="btn" data-close="popup">Abbrechen</button><button id="popup-apply" class="btn btn-dark">Übernehmen</button></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script src="lib/d3.min.js"></script>
+<script src="data.js"></script>
+<script src="core.js"></script>
+<script src="main.js"></script>
+<script src="pages.js"></script>
+</body>
+</html>
